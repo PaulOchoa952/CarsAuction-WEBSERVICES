@@ -1,7 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors=require('cors');
 
 require('./utils/mongoConnection');
+
+app.use(cors({origin: 'http://localhost:4200'}));
 
 const carrosRouter = require('./routers/carros.router');
 const usersRouter =  require('./routers/users.router');
