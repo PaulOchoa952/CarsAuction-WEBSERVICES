@@ -4,7 +4,7 @@ const cors=require('cors');
 
 require('./utils/mongoConnection');
 
-app.use(cors());
+
 
 const carrosRouter = require('./routers/carros.router');
 const usersRouter =  require('./routers/users.router');
@@ -12,6 +12,7 @@ const app = express();
 const port = 3003;
 
 app.use(morgan('dev'));
+app.use(cors());
 
 app.get("/",(req,res)=>{
     res.send("Bienvenido a subastas de carros API")
