@@ -4,7 +4,7 @@ const cors=require('cors');
 
 require('./utils/mongoConnection');
 
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors());
 
 const carrosRouter = require('./routers/carros.router');
 const usersRouter =  require('./routers/users.router');
