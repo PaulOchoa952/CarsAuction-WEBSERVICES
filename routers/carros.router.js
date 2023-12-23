@@ -7,7 +7,7 @@ router.get("/",carroController.getCarros);
 
 router.get("/:carroId",carroController.getCarrosId);
 
-router.post("/",carroController.newCarro);
+router.post("/",authMiddleware.authenticateToken,carroController.newCarro);
 
 router.put("/:carroId",carroController.updateCarro);
 

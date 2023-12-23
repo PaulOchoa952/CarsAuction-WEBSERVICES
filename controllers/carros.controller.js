@@ -59,14 +59,14 @@ exports.newCarro = async (req,res) => {
     }
 }
 
-exports.updateCarro =async(req,res) => {
+exports.updateCarro = async(req,res) => {
     const carroId = req.params.carroId;
-    const newData = req.body;
+    newData = req.body;
     try{
         const updateCarro = await Carro.findByIdAndUpdate(carroId,newData,{new:true});
         return res.status(200).json(
             {
-                message: "Carro actualizado con éxito",
+                message: "Actualizar carro por Id: "+carroId+" con éxito",
                 data: updateCarro
             }
         );
