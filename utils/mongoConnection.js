@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect(
-    'mongodb+srv://root:1145Orbea@cluster0.prnnmbt.mongodb.net/subasta-db?retryWrites=true&w=majority'
+    'mongodb+srv://pruebainterfacesweb:1145Orbea@cluster0.oronri7.mongodb.net/subasta-db?retryWrites=true&w=majority'
 )
 //mongodb+srv://root:<password>@cluster0.prnnmbt.mongodb.net/?retryWrites=true&w=majority
 .then(() => console.log('Conexión exitosa'))
