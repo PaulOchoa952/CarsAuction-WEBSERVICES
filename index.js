@@ -12,7 +12,6 @@ const app = express();
 const port = 3003;
 
 app.use(morgan('dev'));
-const cors = require('cors');
 
 app.use(cors({
   origin: 'http://localhost:4200',
