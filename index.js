@@ -12,11 +12,16 @@ const app = express();
 const port = 3003;
 
 app.use(morgan('dev'));
+const cors = require('cors');
+
 app.use(cors({
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin: 'http://localhost:4200',  // Reemplaza con el origen correcto de tu aplicación Angular
-    optionsSuccessStatus: 204,
-  }));
+  origin: 'http://localhost:4200',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+  allowedHeaders: 'Content-Type, Authorization',
+}));
+
 
 app.get("/",(req,res)=>{
     res.send("Bienvenido a subastas de carros API")
