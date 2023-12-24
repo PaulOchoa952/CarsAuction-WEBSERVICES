@@ -14,13 +14,7 @@ const port = 3003;
 app.use(morgan('dev'));
 app.options('*', cors());
 
-app.use(cors({
-  origin: 'http://localhost:4200',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
-  allowedHeaders: 'Content-Type, Authorization',
-}));
+app.use(cors());
 
 
 app.get("/",(req,res)=>{
