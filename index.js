@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const cors=require('cors');
 
 require('./utils/mongoConnection');
 
@@ -12,9 +11,7 @@ const app = express();
 const port = 3003;
 
 app.use(morgan('dev'));
-app.options('*', cors());
 
-app.use(cors());
 
 
 app.get("/",(req,res)=>{
