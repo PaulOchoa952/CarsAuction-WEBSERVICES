@@ -40,8 +40,8 @@ exports.getCarrosId = async (req,res) => {
 }
 exports.newCarro = async (req,res) => {
     try{
-        const {idCarro,modelo,color,precio,descripcion,imagenes} = req.body
-        const newCarro = new Carro({idCarro,modelo,color,precio,descripcion,imagenes});
+        const {idCarro,modelo,color,precio,descripcion,img} = req.body
+        const newCarro = new Carro({idCarro,modelo,color,precio,descripcion,img});
         await newCarro.save();
         return res.status(200).json(
             {
