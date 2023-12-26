@@ -5,11 +5,7 @@ const carroSchema = new mongoose.Schema({
     color: { type: String},
     precio: { type: Number},
     descripcion: { type: String},
-    imagenes: [
-        {
-            linkimg: { type: String}
-        }
-    ]
+    linkimg: { type: String}      
 });
 
 const Carro = mongoose.model('Carro',carroSchema,'carros');
