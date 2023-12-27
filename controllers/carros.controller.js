@@ -20,7 +20,7 @@ exports.getCarros = async (req,res) => {
 }
 
 exports.getCarrosId = async (req,res) => {
-    const carroId = req.params.bookId;
+    const carroId = req.params.carroId;
     try{
         const carro = await Carro.findById(carroId);
         return res.status(200).json(
@@ -38,6 +38,7 @@ exports.getCarrosId = async (req,res) => {
         )
     }
 }
+
 exports.newCarro = async (req,res) => {
     try{
         const {idCarro,modelo,color,precio,descripcion,img} = req.body

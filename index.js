@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const carrosRouter = require('./routers/carros.router');
+const subastasRouter = require('./routers/users.router');
 const usersRouter =  require('./routers/users.router');
 
 require('./utils/mongoConnection');
@@ -26,6 +27,7 @@ app.get("/",(req,res)=>{
 
 app.use(express.json({limit: '50mb'}));
 app.use('/carros',carrosRouter);
+app.use('/subastas',subastasRouter);
 app.use('/users',usersRouter);
 
 app.listen(port,()=>{
