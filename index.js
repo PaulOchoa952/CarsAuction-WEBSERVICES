@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const carrosRouter = require('./routers/carros.router');
-const subastasRouter = require('./routers/users.router');
+const subastasRouter = require('./routers/subastas.router');
 const usersRouter =  require('./routers/users.router');
 
 require('./utils/mongoConnection');
