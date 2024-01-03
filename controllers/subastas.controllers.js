@@ -92,6 +92,45 @@ exports.verifiedSubasta = async (req, res) => {
     }
 }
 
+exports.getSubastaById = async (req, res) => {
+    const subastaId = req.params.id;
+
+    try {
+        // Intenta encontrar la subasta por el ID proporcionado directamente
+        const subasta = await Subasta.findById(subastaId);
+
+        // Si no se encuentra la subasta por el ID proporcionado, realiza una segunda búsqueda por el ID del carro
+        if (!subasta) {
+            const subastaPorCarro = await Subasta.findOne({ idCarro: req.params.id });
+
+            if (!subastaPorCarro) {
+                // Si no se encuentra ninguna subasta, responde con un mensaje de error
+                return res.status(404).json({
+                    message: "Subasta no encontrada"
+                });
+            }
+
+            // Si se encuentra una subasta por el ID del carro, la devuelve en la respuesta
+            return res.status(200).json({
+                message: "Subasta obtenida con éxito",
+                data: subastaPorCarro
+            });
+        }
+
+        // Si se encuentra la subasta por el ID proporcionado, la devuelve en la respuesta
+        return res.status(200).json({
+            message: "Subasta obtenida con éxito",
+            data: subasta
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error al consultar la subasta",
+            data: error
+        });
+    }
+};
+
+
 exports.updateSubasta = async (req, res) => {
     try {
         const subasta = await Subasta.findById(req.params.id);
@@ -127,6 +166,59 @@ exports.updateSubasta = async (req, res) => {
                 data: updateSubasta
             });
         }
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al actualizar subasta",
+            data: error
+        });
+    }
+}
+
+exports.updateOfertaSubasta = async (req, res) => {
+    try {
+        const subasta = await Subasta.findById(req.params.id);
+
+        if (!subasta) {
+            return res.status(404).json({
+                success: false,
+                message: "Subasta no encontrada",
+            });
+        }
+
+        // Extrae el valor de la nueva oferta del cuerpo de la solicitud
+        const { precioOfertado, idUser } = req.body;
+
+        // Verifica si el estado está cerrado o la fecha final ya ha pasado
+        if (subasta.estado === 'cerrado' || subasta.fechaFin < new Date()) {
+            return res.status(400).json({
+                success: false,
+                message: "No se pueden hacer ofertas en una subasta cerrada o después de la fecha final.",
+            });
+        }
+
+        // Verifica si la nueva oferta es mayor que el precio final actual
+        if (precioOfertado > subasta.precioFinal) {
+            // Actualiza el precio final con el precio de la nueva oferta
+            subasta.precioFinal = precioOfertado;
+        }
+
+        // Agrega la nueva oferta al array de ofertas
+        const nuevaOferta = {
+            idUser, // ID del usuario que realiza la oferta
+            fecha: new Date(),
+            precioOfertado
+        };
+        subasta.ofertas.push(nuevaOferta);
+
+        // Guarda la subasta actualizada en la base de datos
+        await subasta.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Subasta actualizada con éxito",
+            data: subasta
+        });
     } catch (error) {
         return res.status(500).json({
             success: false,
