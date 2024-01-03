@@ -1,6 +1,6 @@
 const Subasta = require('../models/subasta.model');
 const Carro = require('../models/carro.model');
-
+const Usuario = require('../models/user.model');
 exports.getSubastas = async (req, res) => {
     try {
         const subastas = await Subasta.find();
@@ -91,6 +91,50 @@ exports.verifiedSubasta = async (req, res) => {
         });
     }
 }
+
+exports.getOfertasBySubastaId = async (req, res) => {
+    try {
+        const  idSubasta = req.params.id;
+
+        // Realiza la consulta en la base de datos utilizando el idSubasta
+        const subasta = await Subasta.findById(idSubasta);
+
+        if (!subasta) {
+            return res.status(404).json({
+                success: false,
+                message: "Subasta no encontrada",
+            });
+        }
+        console.log(subasta);
+        // Mapea las ofertas para obtener información específica del usuario
+        const ofertasConInformacion = await Promise.all(subasta.ofertas.map(async (oferta) => {
+            // Puedes realizar consultas adicionales aquí según tus necesidades
+            // En este ejemplo, se asume que el idUser corresponde a un usuario en la colección de usuarios
+            const usuario = await Usuario.findById(oferta.idUser);
+
+            return {
+                idUser: oferta.idUser,
+                userName: usuario ? usuario.userName : "Nombre no encontrado",
+                email: usuario ? usuario.email : "Correo no encontrado",
+                fecha: oferta.fecha,
+                precioOfertado: oferta.precioOfertado,
+            };
+        }));
+        console.log(ofertasConInformacion);
+        // Retorna solo el arreglo de ofertas con detalles del usuario
+        return res.status(200).json({
+            success: true,
+            message: "Ofertas encontradas",
+            data: ofertasConInformacion,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al obtener ofertas",
+            data: error,
+        });
+    }
+};
 
 exports.getSubastaById = async (req, res) => {
     const subastaId = req.params.id;
