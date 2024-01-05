@@ -32,5 +32,6 @@ exports.getSubastas = async (req, res) => {
     }
 }
 
+
 const Subasta = mongoose.model('Subasta', subastaSchema, 'subastas');
 module.exports = Subasta;

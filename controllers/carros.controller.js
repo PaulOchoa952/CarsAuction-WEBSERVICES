@@ -1,4 +1,5 @@
 const Carro = require('../models/carro.model');
+const Subasta = require('../models/subasta.model');
 exports.getCarros = async (req,res) => {
     try{
         const carros = await Carro.find();
@@ -81,21 +82,38 @@ exports.updateCarro = async(req,res) => {
     }
 }
 
-exports.deleteCarro = async(req,res) => {
+exports.deleteCarro = async (req, res) => {
     const carroId = req.params.carroId;
-    try{
+
+    try {
+        // Busca el carro por ID
+        const carro = await Carro.findById(carroId);
+        
+        if (!carro) {
+            return res.status(404).json({
+                message: "Carro no encontrado"
+            });
+        }
+
+       
+        // Busca la subasta asociada al carro
+        const subasta = await Subasta.findOne({ idCarro: carroId });
+       
+        // Si existe una subasta, elimínala
+        if (subasta) {
+            await Subasta.findByIdAndDelete(subasta._id);
+        }
+
+        // Elimina el carro
         await Carro.findByIdAndDelete(carroId);
-        return res.status(200).json(
-            {
-                message: "Carro eliminado con éxito " 
-            }
-        );
-    }catch(error){
-        return res.status(500).json(
-            {
-                message: "Error al eliminar carro",
-                data:error
-            }
-        )
+
+        return res.status(200).json({
+            message: "Carro y subasta eliminados con éxito"
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error al eliminar carro y subasta",
+            data: error
+        });
     }
-}
+};
