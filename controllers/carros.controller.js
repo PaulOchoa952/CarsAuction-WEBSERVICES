@@ -62,7 +62,7 @@ exports.newCarro = async (req,res) => {
 
 exports.updateCarro = async(req,res) => {
     const carroId = req.params.carroId;
-    newData = req.body;
+    const newData = req.body;
     try{
         const updateCarro = await Carro.findByIdAndUpdate(carroId,newData,{new:true});
         return res.status(200).json(
