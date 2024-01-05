@@ -18,6 +18,31 @@ exports.getSubastas = async (req, res) => {
     }
 }
 
+exports.getSubastasActivas = async(req, res) => {
+    try {
+        const subastas = await Subasta.find({ estado: 'abierto' });
+        var subastasActivas = [];
+        for (const subasta of subastas) {
+            if (subasta.fechaFin > new Date()) {
+                const carro = await Carro.findById(subasta.idCarro);
+                console.log(carro);
+                subastasActivas.push(carro);
+            }
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Consulta de subastas",
+            data: subastasActivas
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al consultar subastas",
+            data: error
+        });
+    }
+}
+
 exports.createSubasta = async (req, res) => {
     try {
         // Desestructura solo los campos que deseas establecer por defecto
@@ -81,6 +106,7 @@ exports.verifiedSubasta = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: "Carro con una subasta",
+                data: subasta
             });
         }
     } catch (error) {
@@ -185,20 +211,10 @@ exports.updateSubasta = async (req, res) => {
             });
         } else {
             const {
-                idCarro = subasta.idCarro,
-                ofertas = subasta.ofertas,
-                precioFinal = subasta.precioFinal,
-                fechaIni = subasta.fechaIni,
-                fechaFin = subasta.fechaFin,
-                estado = subasta.estado
+                estado = "cerrado"
             } = req.body;
 
             const updateSubasta = {
-                idCarro,
-                ofertas,
-                precioFinal,
-                fechaIni,
-                fechaFin,
                 estado
             };
 
