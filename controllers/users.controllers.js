@@ -73,3 +73,23 @@ exports.loginUser = async (req,res) =>{
         res.status(500).json({error: 'Error al iniciar sesion'});
     }
 };
+exports.updateUser = async(req,res) => {
+    const userId = req.params.userId;
+    const newData = req.body;
+    try{
+        const updateUser = await User.findByIdAndUpdate(userId,newData,{new:true});
+        return res.status(200).json(
+            {
+                message: "Actualizar usuario por Id: "+userId+" con éxito",
+                data: updateUser
+            }
+        );
+    }catch(error){
+        return res.status(500).json(
+            {
+                message: "Error al actualizar usuario",
+                data:error
+            }
+        )
+    }
+}
