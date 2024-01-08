@@ -90,6 +90,42 @@ exports.loginUser = async (req,res) =>{
         res.status(500).json({error: 'Error al iniciar sesion'});
     }
 };
+
+
+exports.deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Verifica si el ID del usuario proporcionado es válido
+    if (!userId) {
+      return res.status(400).json({
+        message: 'ID de usuario no válido',
+      });
+    }
+
+    // Busca y elimina el usuario por su ID
+    const result = await User.deleteOne({ _id: userId });
+
+    // Verifica si se encontró y eliminó el usuario correctamente
+    if (result.deletedCount > 0) {
+      return res.status(200).json({
+        message: 'Usuario eliminado exitosamente',
+        data: result,
+      });
+    } else {
+      return res.status(404).json({
+        message: 'Usuario no encontrado',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error al eliminar usuario',
+      data: error,
+    });
+  }
+};
+
+
 exports.updateUser = async(req,res) => {
     const userId = req.params.userId;
     const newData = req.body;
