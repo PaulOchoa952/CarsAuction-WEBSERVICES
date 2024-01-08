@@ -1,3 +1,9 @@
+/*
+Este código define un esquema y modelo de datos para objetos "User" en una aplicación, 
+utilizando mongoose en JavaScript. El esquema contiene propiedades como nombre de usuario, c
+orreo electrónico, contraseña, nombre, apellido y fecha de creación. El modelo 'User' está 
+asociado a la colección 'users' en MongoDB y se exporta para su uso en otras partes del código.
+*/
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({

@@ -1,3 +1,20 @@
+/*
+
+Este conjunto de funciones en JavaScript utiliza Express y la biblioteca bcrypt para gestionar el registro, 
+inicio de sesión y actualización de usuarios en una aplicación.
+La función registerUser maneja la creación de nuevos usuarios, verifica si ya existe 
+un usuario con el mismo correo electrónico y guarda la contraseña cifrada en la base de datos.
+
+La función getUsers obtiene todos los usuarios de la base de datos.
+
+La función loginUser maneja el inicio de sesión, verifica las credenciales del usuario,
+genera un token JWT y devuelve información del usuario junto con el token.
+
+La función updateUser actualiza la información de un usuario existente por su ID.
+
+Estas funciones manejan situaciones de éxito y error, proporcionando respuestas JSON apropiadas. 
+Además, se utiliza JWT para gestionar la autenticación y autorización del usuario.
+*/
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');

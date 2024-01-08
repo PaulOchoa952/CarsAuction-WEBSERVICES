@@ -1,3 +1,11 @@
+/*
+Este conjunto de funciones en JavaScript utiliza el framework Express y la biblioteca 
+mongoose para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en la colección 
+"carros" de una base de datos MongoDB. Las operaciones incluyen la obtención de todos los carros,
+la obtención de un carro por ID, la creación de un nuevo carro, la actualización de información de 
+un carro por ID y la eliminación de un carro, junto con su subasta asociada si existe.
+Además, maneja situaciones de error y devuelve respuestas JSON apropiadas.
+*/
 const Carro = require('../models/carro.model');
 const Subasta = require('../models/subasta.model');
 exports.getCarros = async (req,res) => {

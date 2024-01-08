@@ -1,3 +1,10 @@
+/*   
+Este código en JavaScript utiliza mongoose para definir un esquema y modelo de datos para objetos
+"Subasta" en una aplicación de subastas de carros. El esquema incluye información como el ID
+del carro, ofertas realizadas con detalles de usuario, precio final, fechas de inicio y fin, 
+y estado (abierto o cerrado). La función getSubastas busca todas las subastas en la base de datos 
+y devuelve una respuesta JSON con la información correspondiente.
+*/
 const mongoose = require('mongoose');
 
 const subastaSchema = new mongoose.Schema({

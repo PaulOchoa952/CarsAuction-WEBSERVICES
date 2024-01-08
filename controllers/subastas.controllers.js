@@ -1,3 +1,12 @@
+/*
+Estas funciones en JavaScript, desarrolladas con Express y mongoose, gestionan las 
+operaciones relacionadas con las subastas en una aplicación. Se incluyen funciones 
+para obtener todas las subastas, obtener subastas activas, crear nuevas subastas, 
+verificar la existencia de una subasta para un carro, obtener ofertas por ID de subasta, 
+obtener detalles de una subasta por ID, actualizar el estado de una subasta, y 
+actualizar las ofertas de una subasta. Además, se manejan situaciones de error y
+se devuelven respuestas JSON apropiadas.
+*/
 const Subasta = require('../models/subasta.model');
 const Carro = require('../models/carro.model');
 const Usuario = require('../models/user.model');
